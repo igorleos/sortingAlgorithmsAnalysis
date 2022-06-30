@@ -25,7 +25,7 @@ gcc -Wall -Wextra -std=c11 -c SelectionSort.c -g
 #Para testar um arquivo utilize um metodo main nesse arquivo, e deixe esse arquivo por ultimo na proxima linha
 #(mantenha a ordem, mude apenas o arquivo que ira testar)
 
-gcc Analytics.o VectorDefinitions.o  MergeSort.o QuickSort.o SelectionSort.o BubbleSort.o HeapSort.o InsertionSort.o ShellSort.o -g
+gcc Analytics.o VectorDefinitions.o  MergeSort.o QuickSort.o BubbleSort.o HeapSort.o InsertionSort.o ShellSort.o SelectionSort.o -g
 
 #Se for no windows tire a # da linha 29, caso linux o da linha 30
 

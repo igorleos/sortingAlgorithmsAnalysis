@@ -37,8 +37,3 @@ void shellSort(int n, int *vetor, Analytics* analyze){
     finishTimer(analyze);
 
 }
-
-int main(){
-    testSorting(1,2);
-    return 0; 
-}
