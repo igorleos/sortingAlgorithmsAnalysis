@@ -1,5 +1,5 @@
 #ifndef __InsertionSort_H_
 #define __InsertionSort_H_
-#include "Analicts.h"
-void insertionSort(int n, int *vetor, Analicts* analyze);
+#include "Analytics.h"
+void insertionSort(int n, int *vetor, Analytics* analyze);
 #endif //__InsertionSort_H_

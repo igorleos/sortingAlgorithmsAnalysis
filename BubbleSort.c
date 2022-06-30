@@ -1,19 +1,31 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "Analicts.h"
+#include "Analytics.h"
+#include "VectorDefinitions.h"
 
-void bubbleSort(int n, int *vetor, Analicts* analyze){
+void bubbleSort(int n, int *vetor, Analytics* analyze){
     int i, j, aux;
-    for(i=1; i<n; i++){
+    startTimer(analyze);
+    for(i=1; analyze->comparedTimes++, i<n; i++){
 
-        for(j=0; j<n-1; j++){
+        for(j=0; analyze->comparedTimes++, j<n-1; j++){
             
-            if(vetor[j]>vetor[j+1]){
+            if(vetor[j]>vetor[j+1] && analyze->comparedTimes++){
 
                 aux = vetor[j+1];
                 vetor[j+1] = vetor[j];
                 vetor[j] = aux;
+
+                analyze->swaps++;
+                analyze->swaps++;
+                analyze->swaps++;
             }
         }
     }
+    finishTimer(analyze);
+}
+
+int main(){
+    testSorting(1, 2);
+    return 0;
 }

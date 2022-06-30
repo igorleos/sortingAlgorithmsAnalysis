@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "Analicts.h"
+#include "Analytics.h"
 
-void shellSort(int n, int *vetor, Analicts* analyze){
+void shellSort(int n, int *vetor, Analytics* analyze){
     int h, i, j, chave;
     h = 1;
     while(h < n){

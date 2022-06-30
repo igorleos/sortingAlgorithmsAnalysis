@@ -1,5 +1,5 @@
 #ifndef __ShellSort_H_
 #define __ShellSort_H_
-#include "Analicts.h"
-void shellSort(int n, int *vetor, Analicts* analyze);
+#include "Analytics.h"
+void shellSort(int n, int *vetor, Analytics* analyze);
 #endif //__ShellSort_H_

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Analicts.h"
+#include "Analytics.h"
 
 // function to swap elements
 void swap(int *a, int *b) {
@@ -54,7 +54,7 @@ void quickSort(int array[], int low, int high) {
   }
 }
 
-void quickSortOrder(int n, int *vetor, Analicts* analyze) {
+void quickSortOrder(int n, int *vetor, Analytics* analyze) {
     quickSort(vetor, 0, n);
 }
 

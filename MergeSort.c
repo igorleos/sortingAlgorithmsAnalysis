@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
-#include "Analicts.h"
+#include "Analytics.h"
 
 void merge(int *vetor, int ini, int meio, int fim) {
     int i = ini, j = meio, k = 0, *w = malloc(fim*sizeof(int));
@@ -37,18 +37,18 @@ void merge(int *vetor, int ini, int meio, int fim) {
     free(w);
 }
 
-void mergesort(int *vetor, int i, int f) {
+void mergeSort(int *vetor, int i, int f) {
     int m;
     if(i<f-1) {
         m = (i+f)/2;
-        mergesort(vetor, i, m);
-        mergesort(vetor, m, f);
+        mergeSort(vetor, i, m);
+        mergeSort(vetor, m, f);
         merge(vetor, i, m, f);
     }
 }
 
-void mergeSortOrder(int n, int *vetor, Analicts* analyze) {
-    mergesort(vetor, 0, n);
+void mergeSortOrder(int n, int *vetor, Analytics* analyze) {
+    mergeSort(vetor, 0, n);
 }
 
 // int main() {

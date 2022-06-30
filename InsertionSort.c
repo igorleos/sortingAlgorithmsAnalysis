@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "Analicts.h"
+#include "Analytics.h"
 
-void insertionSort(int n, int *vetor, Analicts* analyze) {
+void insertionSort(int n, int *vetor, Analytics* analyze) {
     int i, j, chave; 
 
     for(i=1; i<n ; i++){

@@ -1,7 +1,7 @@
 #ifndef __MENU_H_
 #define __MENU_H_
 #include "VectorDefinitions.h"
-#include "Analicts.h"
+#include "Analytics.h"
 
 int menu(VectorDefinitions *vectorDefinitons);
 // void cadastroCliente(Cliente clientes[], long *clientesCount, long *lastClientId);
