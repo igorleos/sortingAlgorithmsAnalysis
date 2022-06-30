@@ -2,7 +2,6 @@
 #include<stdlib.h>
 #include<time.h>
 #include "Analytics.h"
-#include "VectorDefinitions.h"
 
 void constroiHeap(int *vetor, int i, int n, Analytics*  analyze) {
     int maior, l, r, aux;
@@ -50,7 +49,3 @@ void heapSort(int n, int *vetor, Analytics* analyze) {
 }
 
 
-int main(){
-    testSorting(1,2);
-    return 0; 
-}
