@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "Analytics.h"
-#include "VectorDefinitions.h"
 
 void bubbleSort(int n, int *vetor, Analytics* analyze){
     int i, j, aux;
@@ -23,9 +22,4 @@ void bubbleSort(int n, int *vetor, Analytics* analyze){
         }
     }
     finishTimer(analyze);
-}
-
-int main(){
-    testSorting(1, 2);
-    return 0;
 }
