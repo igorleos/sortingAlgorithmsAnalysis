@@ -7,6 +7,9 @@
 void shellSort(int n, int *vetor, Analytics* analyze){
     int h, i, j, chave;
     h = 1;
+
+    startTimer(analyze);
+
     while(h < n){
         h = 3 * h + 1;
     }
@@ -31,6 +34,8 @@ void shellSort(int n, int *vetor, Analytics* analyze){
 
         }
     }
+    finishTimer(analyze);
+
 }
 
 int main(){
