@@ -7,33 +7,33 @@
 void merge(int *vetor, int ini, int meio, int fim, Analytics* analyze) {
     int i = ini, j = meio, k = 0, *w = malloc(fim*sizeof(int));
     
-    analyze->swaps += 4; 
-    
     while(analyze->comparedTimes += 2 && i < meio && j < fim) {
         if(analyze->comparedTimes ++ && vetor[i] <= vetor[j]) {
             w[k] = vetor[i];
+            analyze->swaps ++; 
             i++;
         }
         else {
             w[k] = vetor[j];
+            analyze->swaps ++; 
             j++;
         }
         k++;
     }
 
-    while(i < meio) {
+    while(analyze->comparedTimes++ && i < meio) {
         w[k] = vetor[i];
         i++;
         k++;
     }
 
-    while(j < fim) {
+    while(analyze->comparedTimes++ && j < fim) {
         w[k] = vetor[j];
         j++;
         k++;
     }
 
-    for(i = ini; i < fim; i++) {
+    for(i = ini; analyze->comparedTimes++ && i < fim; i++) {
         vetor[i] = w[i-ini];
     }
 
