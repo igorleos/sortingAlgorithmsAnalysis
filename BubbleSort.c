@@ -3,6 +3,7 @@
 #include "Analytics.h"
 #include "VectorDefinitions.h"
 
+
 void bubbleSort(int n, int *vetor, Analytics* analyze){
     int i, j, aux;
     startTimer(analyze);
