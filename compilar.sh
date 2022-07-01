@@ -28,17 +28,18 @@ function compile_headers {
 
     gcc Analytics.o VectorDefinitions.o HeapSort.o  MergeSort.o QuickSort.o SelectionSort.o ShellSort.o BubbleSort.o InsertionSort.o -g
     
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        ./a.out
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-        ./a.out
-    elif [[ "$OSTYPE" == "cygwin" ]]; then
+    # if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    #     ./a.out
+    # elif [[ "$OSTYPE" == "darwin"* ]]; then
+    #     ./a.out
+    # elif [[ "$OSTYPE" == "cygwin" ]]; then
+    #     ./a.exe
+    # elif [[ "$OSTYPE" == "msys" ]]; then
         ./a.exe
-    elif [[ "$OSTYPE" == "msys" ]]; then
-        ./a.exe
-    else
-            # Unknown.
-    fi
+    # else
+    #         # Unknown.
+    # fi
+
 }
 #Para executar digite no terminal:
 #source compilar.sh

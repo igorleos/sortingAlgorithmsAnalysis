@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include "Analytics.h"
 
+
 void bubbleSort(int n, int *vetor, Analytics* analyze){
     int i, j, aux;
     startTimer(analyze);
