@@ -1,22 +1,34 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "Analytics.h"
+#include "VectorDefinitions.h"
 
-void selectionSort(int n, int *vetor, Analytics* analyze){
-    int i, j ,aux, min; 
+void selectionSort(int n, int *vetor, Analytics* analyze) {
+    startTimer(analyze);
+    
+    int i, j, aux, min;
 
-    for(i=0; i < n; i++){
+    for(i = 0; i < n-1; i++) {
+        analyze->comparedTimes++;
 
-        min = i; 
-        for(j = i+1; j<n; j++) {
+        min = i;
+        for(j = i+1; j < n; j++) {
 
-            if(vetor[j] < vetor[min]) {
+            analyze->comparedTimes+=2;
+            if(vetor[j] < vetor[min])  {
                 min = j;
             }
         }
-        
+        analyze->comparedTimes++;
+
+
         aux = vetor[min];
         vetor[min] = vetor[i];
-        vetor[i] = aux; 
+        vetor[i] = aux;
+
+        analyze->swaps+=3;
     }
+    analyze->comparedTimes++;
+
+    finishTimer(analyze);
 }

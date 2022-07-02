@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-
+#include <string.h>
 #include "Analytics.h"
 #include "VectorDefinitions.h"
 #include "BubbleSort.h"
@@ -16,15 +16,15 @@ void buildVector(int *vector, VectorDefinitions* vectorDefinitions){
 
     if(vectorDefinitions->entryFormat == 1)
         for (i = 0; i < vectorDefinitions->vectorSize; i++) 
-            vector[i] = i;
+            vector[i] = i+1;
     
     if(vectorDefinitions->entryFormat == 2)
         for (i = 0; i < vectorDefinitions->vectorSize; i++) 
-            vector[vectorDefinitions->vectorSize - i -1] = i;
+            vector[vectorDefinitions->vectorSize - i -1] = i+1;
     
     if(vectorDefinitions->entryFormat == 3)
         for (i = 0; i < vectorDefinitions->vectorSize; i++) 
-            vector[i] = (rand() % vectorDefinitions->vectorSize) + 0;
+            vector[i] = (rand() % vectorDefinitions->vectorSize) + 1;
 }
 
 void sortVector(VectorDefinitions* vectorDefinitions, int *vetor, Analytics* analyze){
@@ -56,32 +56,70 @@ void printVector(int *vector, VectorDefinitions* vectorDefinitions){
     printf("\n");
 
     for(i = 0; i < vectorDefinitions->vectorSize; i++){
-        printf("%d\n", vector[i]);
+        printf("%d ", vector[i]);
     }
 }
 
-void testSorting(int orderAlgm, int entryFormat) {
+void generateReports(int orderAlgm, int entryFormat, int vectorSize) {
     VectorDefinitions* vectorDefinitions = malloc(sizeof(VectorDefinitions));
-    vectorDefinitions->vectorSize = VECTOR_FIRST_SIZE;
-    vectorDefinitions->entryFormat = 1;
+    vectorDefinitions->vectorSize = vectorSize;
     vectorDefinitions->orderAlgm = orderAlgm;
     vectorDefinitions->entryFormat = entryFormat;
 
     Analytics* analyze = malloc(sizeof(Analytics));
+    analyze->clockTime=0;
+    analyze->comparedTimes=0;
+    analyze->swaps=0;
 
     int *vector = malloc(vectorDefinitions->vectorSize *sizeof(int));
 
     srand(0);
     buildVector(vector, vectorDefinitions);
 
-    printVector(vector, vectorDefinitions);
+    // printVector(vector, vectorDefinitions);
 
     sortVector(vectorDefinitions, vector, analyze);
 
-    printVector(vector, vectorDefinitions);
-    printAnalyticsData(analyze);
+    // printVector(vector, vectorDefinitions);
+    writeAnalyticsDataCSV(analyze, vectorDefinitions);
 
     free (vector);
     free (vectorDefinitions);
     free (analyze);
+}
+
+void getAlgName(char *algName, VectorDefinitions* vectorDefinitions){
+    if(vectorDefinitions->orderAlgm == 1){
+        strcpy(algName, "Bubble Sort");
+    }
+    if(vectorDefinitions->orderAlgm == 2){
+        strcpy(algName, "HeapSort");
+    }
+    if(vectorDefinitions->orderAlgm == 3){
+        strcpy(algName, "Insertion Sort");
+    }
+    if(vectorDefinitions->orderAlgm == 4){
+        strcpy(algName, "Merge Sort");
+    }
+    if(vectorDefinitions->orderAlgm == 5){
+        strcpy(algName, "Quick Sort");
+    }
+    if(vectorDefinitions->orderAlgm == 6){
+        strcpy(algName, "Selection Sort");
+    }
+    if(vectorDefinitions->orderAlgm == 7){
+        strcpy(algName, "Shell Sort");
+    }
+}
+
+void getEntryFormatName(char *entryFormatName, VectorDefinitions* vectorDefinitions){
+    if(vectorDefinitions->entryFormat == 1){
+        strcpy(entryFormatName, "Crescente");
+    }
+    if( vectorDefinitions->entryFormat == 2){
+        strcpy(entryFormatName, "Decrescente");
+    }
+    if( vectorDefinitions->entryFormat == 3){
+        strcpy(entryFormatName, "Aleatorio");
+    }
 }
