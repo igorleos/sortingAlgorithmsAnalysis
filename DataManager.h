@@ -24,10 +24,11 @@ typedef struct{
     int baseExpoToEqualizeGraph;
 }Alg;
 
-void mockBubbleSortResults(Alg *alg);
 void setBaseExpoToEqualizeGraph(Alg *alg);
+int getBaseExpo(long long greaterValue, long _smallerValue);
+int isMaxEntireDivider(long long dividend, const void* _divider, int _expo);
+
+void mockBubbleSortResults(Alg *alg);
 void printAlgData(Alg *alg);
-int getBaseExpo(Alg *alg, int groupSizePosition, int entryFormatPosition);
-int isMaxEntireDivider(long long divis, const void* divid, int powRating);
 
 #endif //__Analytics_H_

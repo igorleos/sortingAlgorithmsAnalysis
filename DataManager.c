@@ -70,45 +70,59 @@ int main(){
 }
 
 void setBaseExpoToEqualizeGraph(Alg *alg){
-    int greaterBaseExpo = getBaseExpo(alg, 0, 0);
+    long long comparedTimes = alg->sizeGroups[0].entryFormats[0].comparedTimes;
+    long long swaped ;
+
+    long clockTime = alg->sizeGroups[0].entryFormats[0].clockTime;
+    
+    
+    int greaterBaseExpo = getBaseExpo(comparedTimes, clockTime);
 
     for(int gpSizePos = 0; gpSizePos < SIZE_GROUP_QUANTITY; gpSizePos++){
         for(int etFtP = 0; etFtP < ENTRY_FORMAT_QUANTITY; etFtP++){
-            int aux = getBaseExpo(alg, gpSizePos, etFtP);
+            comparedTimes = alg->sizeGroups[gpSizePos].entryFormats[etFtP].comparedTimes;
+            swaped = alg->sizeGroups[gpSizePos].entryFormats[etFtP].swaps;
 
-            if(greaterBaseExpo < aux){
-                greaterBaseExpo = aux;
+            clockTime = alg->sizeGroups[gpSizePos].entryFormats[etFtP].clockTime;
+
+            int comparedTimesToClockTimes = getBaseExpo(comparedTimes, clockTime);
+            int swapedTimesToClockTimes = getBaseExpo(swaped, clockTime);
+
+            if(greaterBaseExpo < comparedTimesToClockTimes){
+                greaterBaseExpo = comparedTimesToClockTimes;
+            }
+            if(greaterBaseExpo < swapedTimesToClockTimes){
+                greaterBaseExpo = swapedTimesToClockTimes;
             }
 
-            if(DEBUG_IS_ON){
+            if(1){
                 printf("greaterBaseExpo expo %d\n", greaterBaseExpo);
-                printf("aux expo %d\n", aux);
+                printf("comparedTimesToClockTimes expo %d\n", comparedTimesToClockTimes);
+                printf("swapedTimesToClockTimes expo %d\n\n", swapedTimesToClockTimes);
             }
         }
     }
     alg->baseExpoToEqualizeGraph = greaterBaseExpo;
-    
+
     if(DEBUG_IS_ON){
         printf("base expo %d\n", alg->baseExpoToEqualizeGraph);
     }
 }
 
-int getBaseExpo(Alg *alg, int groupSizePosition, int entryFormatPosition){
-    long long comparedTimes = alg->sizeGroups[groupSizePosition].entryFormats[entryFormatPosition].comparedTimes;
+int getBaseExpo(long long greaterValue, long _smallerValue){
+    long *smallerValue = malloc(sizeof(long));
+    *smallerValue = _smallerValue;
 
-    float *clockTime = malloc(sizeof(float));
-    *clockTime = alg->sizeGroups[groupSizePosition].entryFormats[entryFormatPosition].clockTime;
-
-    int expo = 1;
+    int expo = 0;
     int exec =100;
-    while(!isMaxEntireDivider(comparedTimes, clockTime, expo) && exec>=0){
+    while(!isMaxEntireDivider(greaterValue, smallerValue, expo) && exec>=0){
         expo++;
         exec--;
     }
 
     if(DEBUG_IS_ON){
-        printf("\ncompared: %lld\n", comparedTimes);
-        printf("clockTime: %.2f\n", *clockTime);
+        printf("\ncompared: %lld\n", greaterValue);
+        printf("clockTime: %ld\n", *smallerValue);
         printf("expo: %d\n", expo);
     }
 
@@ -116,7 +130,7 @@ int getBaseExpo(Alg *alg, int groupSizePosition, int entryFormatPosition){
 }
 
 int isMaxEntireDivider(long long dividend, const void* _divider, int _expo){
-    float divider = *((float *)_divider);
+    long divider = *((long *)_divider);
     long long productBase10 = 1;
     int expo = _expo;
 
@@ -127,12 +141,15 @@ int isMaxEntireDivider(long long dividend, const void* _divider, int _expo){
 
     long long dividerValue = divider  * productBase10;
     long long result = dividend / dividerValue;
+    if(result < 1 && DEBUG_IS_ON){
+        printf("\n\n era para ser 0\n\n");
+    }
     
     if(result < 10 && DEBUG_IS_ON){
         printf("\n\n\n      %lld\n", dividend);
         printf("-------------------------------- = ");
         printf(" %lld\n", result);
-        printf("    %.2f * (10 ^ %d)\n", divider, expo);
+        printf("    %ld * (10 ^ %d)\n", divider, expo);
     }
     return result < 10;
 }
@@ -150,7 +167,7 @@ void printAlgData(Alg *alg){
             printf("swap: %lld\n\n", alg->sizeGroups[gpSizePos].entryFormats[etFtP].swaps);
         }
     }
-    printf("%ld\n", alg->baseExpoToEqualizeGraph);
+    printf("%d\n", alg->baseExpoToEqualizeGraph);
  }
 
 void mockBubbleSortResults(Alg *alg){
@@ -160,7 +177,7 @@ void mockBubbleSortResults(Alg *alg){
     alg->sizeGroups[1].groupSize = 300 * oneK;
     alg->sizeGroups[2].groupSize = 500 * oneK;
     alg->sizeGroups[3].groupSize = 700 * oneK;
-    alg->sizeGroups[4].groupSize = oneK * oneK;
+    //alg->sizeGroups[4].groupSize = oneK * oneK;
 
     /*==========Mock da Coluna de tempo=========*/
     alg->sizeGroups[0].entryFormats[0].clockTime = 18.488;
@@ -179,7 +196,7 @@ void mockBubbleSortResults(Alg *alg){
     alg->sizeGroups[3].entryFormats[1].clockTime = 1291.075;
     alg->sizeGroups[3].entryFormats[2].clockTime = 1548.748;
 
-    alg->sizeGroups[4].entryFormats[0].clockTime = 1809.524;
+    // alg->sizeGroups[4].entryFormats[0].clockTime = 1809.524;
 
 
     /*==========Mock da Coluna de comparacoes=========*/
@@ -199,7 +216,7 @@ void mockBubbleSortResults(Alg *alg){
     alg->sizeGroups[3].entryFormats[1].comparedTimes = 979998000000;
     alg->sizeGroups[3].entryFormats[2].comparedTimes = 979998000000;
 
-    alg->sizeGroups[4].entryFormats[0].comparedTimes = 2000000000000;
+    // alg->sizeGroups[4].entryFormats[0].comparedTimes = 2000000000000;
 
     /*==========Mock da Coluna de chaves=========*/
     alg->sizeGroups[0].entryFormats[0].swaps = 0;
@@ -218,6 +235,6 @@ void mockBubbleSortResults(Alg *alg){
     alg->sizeGroups[3].entryFormats[1].swaps = 734999000000;
     alg->sizeGroups[3].entryFormats[2].swaps = 367478000000;
 
-    alg->sizeGroups[4].entryFormats[0].swaps = 0;
+    //alg->sizeGroups[4].entryFormats[0].swaps = 0;
 
 }
