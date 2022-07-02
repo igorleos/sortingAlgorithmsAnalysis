@@ -83,3 +83,4 @@ Tamanho do vetor;Algoritmo usado;Forma de entrada;Comparacoes realizadas; Chaves
 700000;Shell Sort;Crescente;17402892;17402852;0.032000
 700000;Shell Sort;Decrescente;28356060;22879436;0.047000
 700000;Shell Sort;Aleatorio;81713238;49558025;0.190000
+1000000;Bubble Sort;Crescente;1999997000001;0;1809.524000
