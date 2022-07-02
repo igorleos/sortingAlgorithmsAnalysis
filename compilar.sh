@@ -35,7 +35,7 @@ function compile_headers {
     # elif [[ "$OSTYPE" == "darwin"* ]]; then
     #     ./a.out
     # elif [[ "$OSTYPE" == "cygwin" ]]; then
-        # ./a.exe
+        ./a.exe
     # elif [[ "$OSTYPE" == "msys" ]]; then
         # ./a.exe
     # else
