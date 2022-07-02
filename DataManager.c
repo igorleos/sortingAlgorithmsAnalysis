@@ -65,9 +65,93 @@
 int main(){
     Alg *alg = malloc(sizeof(Alg));
     mockBubbleSortResults(alg);
-    setTimePivot(alg);
+    setBaseExpoToEqualizeGraph(alg);
     // printAlgData(alg);
 }
+
+void setBaseExpoToEqualizeGraph(Alg *alg){
+    int greaterBaseExpo = getBaseExpo(alg, 0, 0);
+
+    for(int gpSizePos = 0; gpSizePos < SIZE_GROUP_QUANTITY; gpSizePos++){
+        for(int etFtP = 0; etFtP < ENTRY_FORMAT_QUANTITY; etFtP++){
+            int aux = getBaseExpo(alg, gpSizePos, etFtP);
+
+            if(greaterBaseExpo < aux){
+                greaterBaseExpo = aux;
+            }
+
+            if(DEBUG_IS_ON){
+                printf("greaterBaseExpo expo %d\n", greaterBaseExpo);
+                printf("aux expo %d\n", aux);
+            }
+        }
+    }
+    alg->baseExpoToEqualizeGraph = greaterBaseExpo;
+    
+    if(DEBUG_IS_ON){
+        printf("base expo %d\n", alg->baseExpoToEqualizeGraph);
+    }
+}
+
+int getBaseExpo(Alg *alg, int groupSizePosition, int entryFormatPosition){
+    long long comparedTimes = alg->sizeGroups[groupSizePosition].entryFormats[entryFormatPosition].comparedTimes;
+
+    float *clockTime = malloc(sizeof(float));
+    *clockTime = alg->sizeGroups[groupSizePosition].entryFormats[entryFormatPosition].clockTime;
+
+    int expo = 1;
+    int exec =100;
+    while(!isMaxEntireDivider(comparedTimes, clockTime, expo) && exec>=0){
+        expo++;
+        exec--;
+    }
+
+    if(DEBUG_IS_ON){
+        printf("\ncompared: %lld\n", comparedTimes);
+        printf("clockTime: %.2f\n", *clockTime);
+        printf("expo: %d\n", expo);
+    }
+
+    return expo;
+}
+
+int isMaxEntireDivider(long long dividend, const void* _divider, int _expo){
+    float divider = *((float *)_divider);
+    long long productBase10 = 1;
+    int expo = _expo;
+
+    while (_expo != 0 ) {
+        productBase10 *= 10;
+        --_expo;
+    }
+
+    long long dividerValue = divider  * productBase10;
+    long long result = dividend / dividerValue;
+    
+    if(result < 10 && DEBUG_IS_ON){
+        printf("\n\n\n      %lld\n", dividend);
+        printf("-------------------------------- = ");
+        printf(" %lld\n", result);
+        printf("    %.2f * (10 ^ %d)\n", divider, expo);
+    }
+    return result < 10;
+}
+
+void printAlgData(Alg *alg){
+    for(int gpSizePos = 0; gpSizePos < SIZE_GROUP_QUANTITY; gpSizePos++){
+        for(int etFtP = 0; etFtP < ENTRY_FORMAT_QUANTITY; etFtP++){
+            printf("group: %d    ", gpSizePos);
+            printf("group: %d    ", alg->sizeGroups[gpSizePos].groupSize);
+            printf("group: %d    ", gpSizePos);
+            printf("entry: %d    ", etFtP);
+
+            printf("clock: %.2f    ", alg->sizeGroups[gpSizePos].entryFormats[etFtP].clockTime);
+            printf("comp: %lld    ", alg->sizeGroups[gpSizePos].entryFormats[etFtP].comparedTimes);
+            printf("swap: %lld\n\n", alg->sizeGroups[gpSizePos].entryFormats[etFtP].swaps);
+        }
+    }
+    printf("%ld\n", alg->baseExpoToEqualizeGraph);
+ }
 
 void mockBubbleSortResults(Alg *alg){
     int oneK = 1000;
@@ -137,83 +221,3 @@ void mockBubbleSortResults(Alg *alg){
     alg->sizeGroups[4].entryFormats[0].swaps = 0;
 
 }
-
- void printAlgData(Alg *alg){
-    for(int gpSizeP = 0; gpSizeP < SIZE_GROUP_QUANTITY; gpSizeP++){
-        for(int etFtP = 0; etFtP < ENTRY_FORMAT_QUANTITY; etFtP++){
-            printf("group: %d    ", gpSizeP);
-            printf("group: %d    ", alg->sizeGroups[gpSizeP].groupSize);
-            printf("group: %d    ", gpSizeP);
-            printf("entry: %d    ", etFtP);
-
-            printf("clock: %.2f    ", alg->sizeGroups[gpSizeP].entryFormats[etFtP].clockTime);
-            printf("comp: %lld    ", alg->sizeGroups[gpSizeP].entryFormats[etFtP].comparedTimes);
-            printf("swap: %lld\n\n", alg->sizeGroups[gpSizeP].entryFormats[etFtP].swaps);
-        }
-    }
-    printf("%ld\n", alg->timePivot);
- }
-
-
-void setTimePivot(Alg *alg){
-    int diferenceRate = getDiferenceRate(alg, 0, 0);
-
-    for(int gpSizeP = 0; gpSizeP < SIZE_GROUP_QUANTITY; gpSizeP++){
-        for(int etFtP = 0; etFtP < ENTRY_FORMAT_QUANTITY; etFtP++){
-            int aux = getDiferenceRate(alg, gpSizeP, etFtP);
-
-            if(etFtP > aux){
-                diferenceRate = aux;
-            }
-        }
-    }
-    alg->timePivot = diferenceRate;
-}
-
-int getDiferenceRate(Alg *alg, int groupSizePosition, int entryFormatPosition){
-    long long comparedTimes = alg->sizeGroups[groupSizePosition].entryFormats[entryFormatPosition].comparedTimes;
-    float *clockTime = malloc(sizeof(float));
-    *clockTime = alg->sizeGroups[groupSizePosition].entryFormats[entryFormatPosition].clockTime;
-    int expo = 0;
-    int exec =100;
-    while(!isMaxEntireDiv(comparedTimes, clockTime, expo) && exec>=0){
-        expo++;
-        exec--;
-    }
-
-    printf("\ncompared: %lld\n", comparedTimes);
-    printf("clockTime: %.2f\n", *clockTime);
-    printf("expo: %d\n", expo);
-    return expo;
-}
-
-int isMaxEntireDiv(long long dividend, const void* _divider, int _expo){
-    float divider = *((float *)_divider);
-    int expo = _expo;
-    long long productBase10 = 1;
-
-
-    int exec =20;
-    while (expo != 0 && exec>=0) {
-        productBase10 *= 10;
-        --expo;
-        exec--;
-    }
-
-    long long dividerValue = dividend / productBase10;
-    long long divisonRest = dividerValue %  (int)divider;
-    
-    if(divisonRest < 10){
-        printf("\n      %lld / (10 ^ %d) = %lld\n", dividend, _expo, productBase10);
-        printf("-------------------------------- = ");
-        printf(" %lld\n", divisonRest);
-        printf("      %d\n\n", (int)divider );
-    }
-
-
-    // printf("expoente:%d\n", _expo);
-    // printf("divisor puro: %lld\n\n\n", divider);
-    
-    return divisonRest < 10;
-}
-
