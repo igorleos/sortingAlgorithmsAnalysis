@@ -5,19 +5,15 @@
 #include "VectorDefinitions.h"
 #include "Analytics.h"
 
-
-#define TOTAL_COMPRA 15
-#define MEIOS_PGMT_QNT 6
-
 int menu(VectorDefinitions *vectorDefinitons){
 
-    int menuOption = 0;
-    printf("1 - Definir algoritmo de ordenacao\n");
-    printf("2 - Definir tamanho do vetor\n");
-    printf("3 - Escolher formato de entrada do vetor\n");
-    printf("6 - Gerar relatorios\n");
-    printf("-1 - Para sair\n");
-    scanf("%d", &menuOption);
+    int menuOption = 4;
+    // printf("1 - Definir algoritmo de ordenacao\n");
+    // printf("2 - Definir tamanho do vetor\n");
+    // printf("3 - Escolher formato de entrada do vetor\n");
+    // printf("4 - Gerar relatorios\n");
+    // printf("-1 - Para sair\n");
+    //scanf("%d", &menuOption);
 
     if(menuOption == 1){
         printf("1 - BubbleSort\n");
@@ -31,7 +27,7 @@ int menu(VectorDefinitions *vectorDefinitons){
 
     }else if(menuOption == 2){
         printf("Digite o tamanho do vetor\n");
-        scanf("%ld", &vectorDefinitons->vectorSize);
+        scanf("%lld", &vectorDefinitons->vectorSize);
 
     }else if(menuOption == 3){
         printf("1 - Ordem crescente\n");
@@ -40,12 +36,21 @@ int menu(VectorDefinitions *vectorDefinitons){
         scanf("%d", &vectorDefinitons->entryFormat);
 
     }else if(menuOption == 4){
-        //TODO realizar ordenacao
-
+        int vectorSizes[]= {VECTOR_FIRST_SIZE, VECTOR_SECOND_SIZE, VECTOR_THIRD_SIZE, VECTOR_FOURTH_SIZE, VECTOR_FIFTH_SIZE, VECTOR_SIXTH_SIZE};
+        prepareCSVFile();
+        
+        for(int size=0; size<7; size++){
+            for(int alg=1; alg<8; alg++){
+                for(int entry=1; entry<4; entry++){
+                    generateReports(alg,entry, vectorSizes[size]);
+                }
+            }
+        }
     }else if(menuOption == -1){
         //*hasPressedEscape = 1;TODO escape
         
     }else{
         printf("Digite uma opcao valida\n");
     }
+    return 0;
 }

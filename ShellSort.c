@@ -3,37 +3,49 @@
 #include "Analytics.h"
 #include "VectorDefinitions.h"
 
-
-void shellSort(int n, int *vetor, Analytics* analyze){
-    int h, i, j, chave;
-    h = 1;
-
+void shellSort(int n, int *vetor, Analytics* analyze) {
     startTimer(analyze);
 
-    while(h < n){
+    int h, i, j, chave;
+    h = 1;
+    while (h < n) {
+        analyze->comparedTimes++;
         h = 3 * h + 1;
     }
-    while(h>=1){
-        h=h/3; 
-        for(i=h, analyze->comparedTimes++, i<n; i++;){
+    analyze->comparedTimes++;
+
+    while(h>=1) {
+        analyze->comparedTimes++;
+        
+        h=h/3;
+        for(i = h; i < n; i++) {
+            analyze->comparedTimes++;
+            
             chave = vetor[i];
-            j = i - h;
 
             analyze->swaps++;
 
-            while (analyze->comparedTimes+=2 && j>=0 && vetor[j]>chave){
-                vetor[j+h] = vetor[i];
-                j = j - h;
+            j = i - h;
+            while(j>=0 && vetor[j]>chave) {
+                analyze->comparedTimes+=2;
+                
+                vetor[j+h] = vetor[j];
 
                 analyze->swaps++;
 
+                j = j - h;
             }
+            analyze->comparedTimes++;
+
             vetor[j+h] = chave;
 
             analyze->swaps++;
-
         }
-    }
-    finishTimer(analyze);
+        analyze->comparedTimes++;
 
+    }
+    analyze->comparedTimes++;
+
+    finishTimer(analyze);
 }
+

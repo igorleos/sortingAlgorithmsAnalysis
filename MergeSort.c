@@ -6,35 +6,41 @@
 
 void merge(int *vetor, int ini, int meio, int fim, Analytics* analyze) {
     int i = ini, j = meio, k = 0, *w = malloc(fim*sizeof(int));
-    
-    while(analyze->comparedTimes += 2 && i < meio && j < fim) {
-        if(analyze->comparedTimes ++ && vetor[i] <= vetor[j]) {
+
+    while(i < meio && j < fim) {
+        analyze->comparedTimes+=2;
+        if(analyze->comparedTimes++ && vetor[i] <= vetor[j]) {
             w[k] = vetor[i];
-            analyze->swaps ++; 
+            analyze->swaps++;
             i++;
         }
         else {
             w[k] = vetor[j];
-            analyze->swaps ++; 
+            analyze->swaps++;
             j++;
         }
         k++;
     }
 
-    while(analyze->comparedTimes++ && i < meio) {
+    while(i < meio) {
+        analyze->comparedTimes++;
         w[k] = vetor[i];
+        analyze->swaps++;
         i++;
         k++;
     }
 
-    while(analyze->comparedTimes++ && j < fim) {
+    while(j < fim) {
+        analyze->comparedTimes++;
         w[k] = vetor[j];
+        analyze->swaps++;
         j++;
         k++;
     }
 
     for(i = ini; analyze->comparedTimes++ && i < fim; i++) {
         vetor[i] = w[i-ini];
+        analyze->swaps++;
     }
 
     free(w);
@@ -42,6 +48,8 @@ void merge(int *vetor, int ini, int meio, int fim, Analytics* analyze) {
 
 void mergeSort(int *vetor, int i, int f, Analytics* analyze) {
     int m;
+
+    analyze->comparedTimes++;
     if(i<f-1) {
         m = (i+f)/2;
         mergeSort(vetor, i, m, analyze);
@@ -51,10 +59,9 @@ void mergeSort(int *vetor, int i, int f, Analytics* analyze) {
 }
 
 void mergeSortOrder(int n, int *vetor, Analytics* analyze) {
-    mergeSort(vetor, 0, n, analyze);
-}
+    startTimer(analyze);
 
-int main() {
-    testSorting(4,1);
-    return 0;
+    mergeSort(vetor, 0, n, analyze);
+
+    finishTimer(analyze);
 }

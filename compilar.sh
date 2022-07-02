@@ -1,8 +1,10 @@
 #!/bin/bash
 function compile_headers {
+    gcc -Wall -Wextra -std=c11 -c VectorDefinitions.c -g
+
     gcc -Wall -Wextra -std=c11 -c Analytics.c -g
 
-    gcc -Wall -Wextra -std=c11 -c VectorDefinitions.c -g
+
 
     gcc -Wall -Wextra -std=c11 -c BubbleSort.c -g
 
@@ -22,22 +24,22 @@ function compile_headers {
 
     gcc -Wall -Wextra -std=c11 -c SelectionSort.c -g
 
+    gcc -Wall -Wextra -std=c11 -c Menu.c -g
 
-    #Para testar um arquivo utilize um metodo main nesse arquivo, e deixe esse arquivo por ultimo na proxima linha
-    #(mantenha a ordem, mude apenas o arquivo que ira testar)
+    gcc -Wall -Wextra -std=c11 -c Main.c -g
 
-    gcc Analytics.o VectorDefinitions.o HeapSort.o  MergeSort.o QuickSort.o SelectionSort.o ShellSort.o BubbleSort.o InsertionSort.o -g
+    gcc Analytics.o VectorDefinitions.o HeapSort.o  MergeSort.o QuickSort.o  ShellSort.o BubbleSort.o InsertionSort.o SelectionSort.o Menu.o Main.o -g
     
     # if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     #     ./a.out
     # elif [[ "$OSTYPE" == "darwin"* ]]; then
     #     ./a.out
     # elif [[ "$OSTYPE" == "cygwin" ]]; then
-    #     ./a.exe
+        # ./a.exe
     # elif [[ "$OSTYPE" == "msys" ]]; then
-        ./a.exe
+        # ./a.exe
     # else
-    #         # Unknown.
+    #   echo "Sistema nao indentificado, rode manualmente o executavel 'a.out/a.exe'"
     # fi
 
 }

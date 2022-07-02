@@ -9,14 +9,16 @@ void insertionSort(int n, int *vetor, Analytics* analyze) {
 
     startTimer(analyze);
 
-    for( i=1; analyze->comparedTimes++, i<n ; i++){
+    for( i=1; i<n ; i++){
+        analyze->comparedTimes++;
 
         chave = vetor[i];
         j = i -1; 
 
         analyze->swaps++;
 
-        while(analyze->comparedTimes+=2 && j>=0 && vetor[i]>chave){
+        while( j>=0 && vetor[j]>chave){
+            analyze->comparedTimes+=2;
 
             vetor[j+1] = vetor[j];
             j = j - 1;
@@ -29,6 +31,7 @@ void insertionSort(int n, int *vetor, Analytics* analyze) {
         analyze->swaps++;
 
     }
+    
     finishTimer(analyze);
 
 }
