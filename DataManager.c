@@ -3,69 +3,80 @@
 #include <string.h>
 #include "DataManager.h"
 
-// int main(){
-// 	FILE* fp = fopen("AnalyticsData.csv", "r");
 
-// 	if (!fp)
-// 		printf("Can't open file\n");
+int readCsvFile(Alg algoritms[], int algmsQnt){
+	FILE* fp = fopen("AnalyticsData.csv", "r");
 
-// 	else {
-// 		// Here we have taken size of
-// 		// array 1024 you can modify it
-// 		char buffer[1024];
+	if (!fp)
+		printf("Arquivo nao foi aberto\n");
 
-// 		int row = 0;
-// 		int column = 0;
+	else {
+		// Here we have taken size of
+		// array 1024 you can modify it
+		char buffer[1024];
 
+		int row = 0;
+		int column = 0;
 
+		while (fgets(buffer,1024, fp)) {
+			column = 0;
+			row++;
 
-// 		while (fgets(buffer,1024, fp)) {
-// 			column = 0;
-// 			row++;
+			// To avoid printing of column
 
-// 			// To avoid printing of column
+			if (row == 1)
+				continue;
 
-// 			if (row == 1)
-// 				continue;
+			// Splitting the data
+			char* value = strtok(buffer, "; ");
 
-// 			// Splitting the data
-// 			char* value = strtok(buffer, "; ");
-//             //fprintf(fpt,"Tamanho do vetor;Algoritmo usado;Forma de entrada;Comparacoes realizadas; Chaves trocadas; Tempo total\n");
+            
+			while (value) {
+                int algNamePos, groupSizePos, entryFormatPos;
 
-// 			while (value) {
-// 				// Column 1
-// 				if (column == 0) {
-// 					printf("Name :");
-// 				}
+				if (column == VECTOR_SIZE_COLUMN) {
+					groupSizePos= getSizeGroupPos(value);
+                    algoritms[algNamePos].sizeGroups[groupSizePos].groupSize = value;
+				}     
 
-// 				// Column 2
-// 				if (column == 1) {
-// 					printf("\tAccount No. :");
-// 				}
+				if (column == ALG_NAME_COLUMN) {
+					algNamePos = getAlgsPos(value);
+				}
 
-// 				// Column 3
-// 				if (column == 2) {
-// 					printf("\tAmount :");
-// 				}
+				if (column == ENTRY_FORMAT_COLUMN) {
+                    entryFormatPos = getEntryFormatPos(value);
+				}
+                
+				if (column == COMPARED_TIMES_COLUMN) {
+                    algoritms[algNamePos].sizeGroups[groupSizePos].entryFormats[entryFormatPos].comparedTimes = value;
+				}
 
-// 				printf("%s", value);
-// 				value = strtok(NULL, ", ");
-// 				column++;
-// 			}
+				if (column == SWAPS_COLUMN) {
+                    algoritms[algNamePos].sizeGroups[groupSizePos].entryFormats[entryFormatPos].swaps = value;
+				}
 
-// 			printf("\n");
-// 		}
+                if (column == TIME_COLUMN) {
+                    algoritms[algNamePos].sizeGroups[groupSizePos].entryFormats[entryFormatPos].clockTime = (float)*value;
+				}
 
-// 		// Close the file
-// 		fclose(fp);
-// 	}
-// 	return 0;
-// }
+				value = strtok(NULL, "; ");
+				column++;
+			}
+		}
+		fclose(fp);
+	}
+	return 0;
+}
 
 int main(){
-    Alg *alg = malloc(sizeof(Alg));
-    mockBubbleSortResults(alg);
-    setBaseExpoToEqualizeGraph(alg);
+    Alg algoritms[ALG_QUANTITY];
+    readCsvFile(algoritms, ALG_QUANTITY);
+
+    //Alg *alg = malloc(sizeof(Alg));
+    // mockBubbleSortResults(alg);
+    for(int algPos = 0; algPos < ALG_QUANTITY; algPos++){
+        setBaseExpoToEqualizeGraph(&algoritms[algPos]);
+    }
     // printAlgData(alg);
 }
 
@@ -95,7 +106,7 @@ void setBaseExpoToEqualizeGraph(Alg *alg){
                 greaterBaseExpo = swapedTimesToClockTimes;
             }
 
-            if(1){
+            if(DEBUG_IS_ON){
                 printf("greaterBaseExpo expo %d\n", greaterBaseExpo);
                 printf("comparedTimesToClockTimes expo %d\n", comparedTimesToClockTimes);
                 printf("swapedTimesToClockTimes expo %d\n\n", swapedTimesToClockTimes);
@@ -237,4 +248,72 @@ void mockBubbleSortResults(Alg *alg){
 
     //alg->sizeGroups[4].entryFormats[0].swaps = 0;
 
+}
+
+int getAlgsPos(char *algName){
+    int pos;
+    if(algName == "BubbleSort"){
+        pos = 0;
+    }
+    if(algName == "HeapSort"){
+        pos = 1;
+    }
+    if(algName == "InsertionSort"){
+        pos = 2;
+    }
+    if(algName == "MergeSort"){
+        pos = 3;
+    }
+    if(algName == "QuickSort"){
+        pos = 4;
+    }
+    if(algName == "SelectionSort"){
+        pos = 5;
+    }
+    if(algName == "ShellSort"){
+        pos = 6;
+    }
+    return pos;
+}
+
+int getSizeGroupPos(int size){
+    int pos;
+    int oneK =1000;
+
+    if(size == 100*oneK){
+        pos = 0;
+    }
+    else if(size == 300*oneK){
+        pos = 1;
+    }
+    else if(size == 500*oneK){
+        pos = 2;
+    }
+    else if(size == 700*oneK){
+        pos = 3;
+    }
+    else if(size == oneK*oneK){
+        pos = 4;
+    }
+    else if(size == 200*oneK*oneK){
+        pos = 5;
+    }
+    else{
+        pos=-1;
+    }
+    return pos;
+}
+
+int getEntryFormatPos(char *entryFormatName){
+    int pos;
+    if(entryFormatName == "Crescente"){
+        pos = 0;
+    }
+    if(entryFormatName == "Decrescente"){
+        pos = 1;
+    }
+    if(entryFormatName == "Aleatorio"){
+        pos = 2;
+    }
+    return pos;
 }

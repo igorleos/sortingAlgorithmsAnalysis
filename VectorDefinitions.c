@@ -90,25 +90,25 @@ void generateReports(int orderAlgm, int entryFormat, int vectorSize) {
 
 void getAlgName(char *algName, VectorDefinitions* vectorDefinitions){
     if(vectorDefinitions->orderAlgm == 1){
-        strcpy(algName, "Bubble Sort");
+        strcpy(algName, "BubbleSort");
     }
     if(vectorDefinitions->orderAlgm == 2){
         strcpy(algName, "HeapSort");
     }
     if(vectorDefinitions->orderAlgm == 3){
-        strcpy(algName, "Insertion Sort");
+        strcpy(algName, "InsertionSort");
     }
     if(vectorDefinitions->orderAlgm == 4){
-        strcpy(algName, "Merge Sort");
+        strcpy(algName, "MergeSort");
     }
     if(vectorDefinitions->orderAlgm == 5){
-        strcpy(algName, "Quick Sort");
+        strcpy(algName, "QuickSort");
     }
     if(vectorDefinitions->orderAlgm == 6){
-        strcpy(algName, "Selection Sort");
+        strcpy(algName, "SelectionSort");
     }
     if(vectorDefinitions->orderAlgm == 7){
-        strcpy(algName, "Shell Sort");
+        strcpy(algName, "ShellSort");
     }
 }
 
