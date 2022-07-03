@@ -51,7 +51,7 @@ function compile_data {
     echo -e "\n\n\n\n\n\n\n\n====================";
     gcc -Wall -Wextra -std=c11 -c DataManager.c -g
     gcc DataManager.o -g
-    ./a.out
+    #./a.out
 }
 
 

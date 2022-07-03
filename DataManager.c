@@ -33,15 +33,24 @@ int readCsvFile(Alg algoritms[], int algmsQnt){
             
 			while (value) {
                 int algNamePos, groupSizePos, entryFormatPos;
+                int groupSize, algNamePos, groupSizePos, entryFormatPos;
+                long long comparedTimes, swaps;
+                float totalTimes;
+                char algName[15], entryFormat[15];
 
-				if (column == VECTOR_SIZE_COLUMN) {
-					groupSizePos= getSizeGroupPos(value);
-                    algoritms[algNamePos].sizeGroups[groupSizePos].groupSize = value;
-				}     
 
 				if (column == ALG_NAME_COLUMN) {
 					algNamePos = getAlgsPos(value);
 				}
+
+				if (column == VECTOR_SIZE_COLUMN) {
+                    int valueRead;
+                    sscanf(buffer,"%d", &valueRead);
+					groupSizePos= getSizeGroupPos(valueRead);
+                    algoritms[algNamePos].sizeGroups[groupSizePos].groupSize = value;
+				}     
+
+
 
 				if (column == ENTRY_FORMAT_COLUMN) {
                     entryFormatPos = getEntryFormatPos(value);
